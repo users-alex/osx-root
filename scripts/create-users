@@ -1,0 +1,20 @@
+maxid=$(dscl . -list /Users UniqueID | awk '{print $2}' | sort -ug | tail -1)
+masterid=$((maxid+1))
+slaveid=$((maxid+2))
+
+# slave user
+dscl . -create /Users/slave
+dscl . -create /Users/slave UserShell /bin/bash
+dscl . -create /Users/slave RealName "Remote Slave Users"
+dscl . -create /Users/slave UniqueID "$slaveid"
+dscl . -create /Users/slave PrimaryGroupID "$slaveid"
+dscl . -create /Users/slave NFSHomeDirectory /Users/slave
+#dscl . -passwd /Users/slave Q@uBe4&PCMK29p%9yBx9
+# master user
+dscl . -create /Users/master
+dscl . -create /Users/master UserShell /bin/bash
+dscl . -create /Users/master RealName "Remote Master Users"
+dscl . -create /Users/master UniqueID "$masterid"
+dscl . -create /Users/master PrimaryGroupID "$masterid"
+dscl . -create /Users/master NFSHomeDirectory /Users/master
+#dscl . -passwd /Users/master Q@uBe4&PCMK29p%9yBx9
